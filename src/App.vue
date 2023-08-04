@@ -2,9 +2,7 @@
 <div class="container " >
   <Menu></Menu>
   <RouterView />
-      <div class="row hello mx-5 my-5 pr-5" >
-        <h1>Hoşgeldiniz!</h1>
-      </div>
+
 </div>
 </template>
 <script>
@@ -27,8 +25,6 @@ body{
   top: 0 !important;
   margin: 0 !important;
 } */
-.hello{
-  margin: 14em 10em !important;
-}
+
 
 </style>
