@@ -1,24 +1,24 @@
 import {ref} from "vue";
 import {db} from "../firebase/config";
-import {getDoc,query,collection,orderBy} from 'firebase/firestore'
-
+import {getDocs,query,collection,orderBy,doc} from 'firebase/firestore'
+import moment from 'moment'
 const getCompany = () => {
-    const hatalar = ref(null)
     const companys = ref([])
     const companysData = async () => {
-    try {
-        
-            const res =collection(db,"companys")
-            await getDoc(res)
-              let get=  companys.value = res.docs.map(docs => {
-                return {...docs.data(),id: docs.id}})
-                console.log(get);
 
-        
-    }catch(error){
-        hatalar.value=error.message
-    }
+            const res =await getDocs(query(
+                collection(db, "companys"),
+                orderBy("dataDate", "desc")
+            ))
+            
+            // makale.value={...docSnap.data(),id:docSnap.id,olusturulmaTarihi:formatlanmısTarih} 
+            companys.value = res.docs.map(docs => {
+                const tarih=docs.data().dataDate.toDate();
+                const currentDate=moment(tarih).format('LL')
+                return {...docs.data(),id:docs.id,dataDate:currentDate}
+            })
+
 }
-    return {companys,hatalar,companysData}
+    return {companys,companysData}
 }
 export default getCompany

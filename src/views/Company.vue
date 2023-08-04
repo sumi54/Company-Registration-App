@@ -14,14 +14,14 @@
         <th scope="col"></th>
         </tr>
     </thead>
-    <tbody class="text-center">
+    <tbody class="text-center" v-for="company in companys" :key="company.id">
         <tr>
         <th scope="row">1</th>
-        <td :companys="companys.name"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ company.name }}</td>
+        <td>{{ company.employers }}</td>
+        <td>{{ company.sector }}</td>
+        <td>{{ company.date }}</td>
+        <td>{{ company.dataDate }}</td>
         <td></td>
         <td>
             <button type="button" class="btn btn-success mx-1">Güncelle </button>
@@ -32,11 +32,16 @@
         
     </tbody>
  </table>
+ 
 </div>
 </template>
 <script>
 import getCompanys from '../compasables/getCompanys.js'
 import AddButton from '../components/addCompany.vue'
+import { ref } from "vue";
+import { db } from "../firebase/config";
+import {doc, getDoc} from 'firebase/firestore'
+import moment from 'moment'
 export default{
     components:{
         AddButton
@@ -44,7 +49,6 @@ export default{
     setup(){
         const {companys,companysData}=getCompanys()
         companysData()
-        console.log(companys);
         return{companys}
         
     }
