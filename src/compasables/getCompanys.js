@@ -1,6 +1,6 @@
 import {ref} from "vue";
 import {db} from "../firebase/config";
-import {getDocs,query,collection,orderBy} from 'firebase/firestore'
+import {getDoc,query,collection,orderBy} from 'firebase/firestore'
 
 const getCompany = () => {
     const hatalar = ref(null)
@@ -8,16 +8,15 @@ const getCompany = () => {
     const companysData = async () => {
     try {
         
-            const res = getDocs(query(
-                collection(db, "company"),
-                orderBy("dataKurulus", "desc")
-            ))
-            companys.value = res.docs.map(docs => {
-                return {...docs.data(),id: docs.id}
-            })
+            const res =collection(db,"companys")
+            await getDoc(res)
+              let get=  companys.value = res.docs.map(docs => {
+                return {...docs.data(),id: docs.id}})
+                console.log(get);
+
         
-    }catch{
-        hatalar.value=hatalar.message
+    }catch(error){
+        hatalar.value=error.message
     }
 }
     return {companys,hatalar,companysData}

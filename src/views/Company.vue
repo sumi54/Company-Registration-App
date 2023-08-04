@@ -8,26 +8,25 @@
         <th scope="col">Şirket Adı</th>
         <th scope="col">Toplam Çalışan</th>
         <th scope="col">Sektör</th>
-        <th scope="col">Firma'nın Kuruluş Tarihi</th>
-        <th scope="col">Data'nın Oluşturulma Tarihi</th>
-        <th scope="col">Data'nın Güncellenme Tarihi</th>
-        <th scope="col"></th>
+        <th scope="col">Kuruluş Tarihi</th>
+        <th scope="col">Oluşturulma Tarihi</th>
+        <th scope="col">Güncellenme Tarihi</th>
         <th scope="col"></th>
         </tr>
     </thead>
     <tbody class="text-center">
         <tr>
         <th scope="row">1</th>
+        <td :companys="companys.name"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td><button type="button" class="btn btn-success">Güncelle </button> </td>
         <td>
-            
+            <button type="button" class="btn btn-success mx-1">Güncelle </button>
             <button type="button" class="btn btn-danger">Sil</button>
+
         </td>
         </tr>
         
@@ -43,7 +42,7 @@ export default{
         AddButton
     },
     setup(){
-        const {companys,hatalar,companysData}=getCompanys()
+        const {companys,companysData}=getCompanys()
         companysData()
         console.log(companys);
         return{companys}

@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app';
-import { getFirestore} from "firebase/firestore";
+import { getFirestore,Timestamp} from "firebase/firestore";
 const firebaseConfig = {
     apiKey: "AIzaSyAo94FG5XQr5zjnLGlldY20G--0h_GB7CI",
     authDomain: "company-registation.firebaseapp.com",
@@ -10,4 +10,5 @@ const firebaseConfig = {
   };
   initializeApp(firebaseConfig)
   const db=getFirestore()
-  export {db}
+  const timestamp=Timestamp.now().toDate()
+  export {db,timestamp}
