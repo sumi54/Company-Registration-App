@@ -14,20 +14,20 @@
         <th scope="col"></th>
         </tr>
     </thead>
-    <tbody class="text-center" v-for="company in companys" :key="company.id">
-        <tr>
-        <th scope="row">1</th>
-        <td>{{ company.name }}</td>
-        <td>{{ company.employers }}</td>
-        <td>{{ company.sector }}</td>
-        <td>{{ company.date }}</td>
-        <td>{{ company.dataDate }}</td>
-        <td></td>
-        <td>
-            <button type="button" class="btn btn-success mx-1">Güncelle </button>
-            <button type="button" class="btn btn-danger">Sil</button>
+    <tbody class="text-center" >
+        <tr v-for="company in companys" :key="company.id" >
+            <th scope="row">1</th>
+            <td>{{ company.name }}</td>
+            <td>{{ company.employers }}</td>
+            <td>{{ company.sector }}</td>
+            <td>{{ company.date }}</td>
+            <td>{{ company.dataDate }}</td>
+            <td></td>
+            <td>
+                <UpdateButton :company="company" ></UpdateButton>
+                <button type="button" class="btn btn-danger" @click="deleteCompany(company.id)">Sil</button>
 
-        </td>
+            </td>
         </tr>
         
     </tbody>
@@ -38,19 +38,30 @@
 <script>
 import getCompanys from '../compasables/getCompanys.js'
 import AddButton from '../components/addCompany.vue'
-import { ref } from "vue";
-import { db } from "../firebase/config";
-import {doc, getDoc} from 'firebase/firestore'
-import moment from 'moment'
+import UpdateButton from '../components/updateButton.vue'
+import {collection,doc,getDoc,setDoc,deleteDoc} from 'firebase/firestore'
+import {db} from "../firebase/config";
+import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 export default{
     components:{
-        AddButton
+        AddButton,
+        UpdateButton
     },
     setup(){
-        const {companys,companysData}=getCompanys()
+
+        const router=useRouter()
+        const companyId=ref(null)
+        const {companys,companysData}=getCompanys(companyId)
         companysData()
-        return{companys}
-        
+        const deleteCompany= async (id)=>{
+            const docRef=doc(db,"companys",id)
+            await deleteDoc(docRef).then(()=>{
+                router.push('/')
+            })
+       }
+       
+        return{companys,deleteCompany,companyId,companyId}
     }
 }
 </script>

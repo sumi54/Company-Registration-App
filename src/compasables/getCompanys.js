@@ -11,7 +11,6 @@ const getCompany = () => {
                 orderBy("dataDate", "desc")
             ))
             
-            // makale.value={...docSnap.data(),id:docSnap.id,olusturulmaTarihi:formatlanmısTarih} 
             companys.value = res.docs.map(docs => {
                 const tarih=docs.data().dataDate.toDate();
                 const currentDate=moment(tarih).format('LL')
