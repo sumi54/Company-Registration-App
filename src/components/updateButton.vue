@@ -36,34 +36,42 @@
 <script>
 import {ref,reactive,defineProps,toRefs} from "vue";
 import {db,timestamp} from "../firebase/config";
-import {addDoc, collection,doc,getDoc,setDoc} from 'firebase/firestore'
+import {addDoc, collection,doc,getDoc,setDoc,updateDoc} from 'firebase/firestore'
 import { useRouter } from "vue-router";
 export default{
 
   props :["company"],
   setup(props){
     const updateDate=ref(null)
+    const dataDate=ref(null)
+    const name=ref('')
     const employers=ref('')
     const sector=ref('')
     const router=useRouter()
 
     const update = (id) => {
-      const date={
-        updateDate:timestamp
+      const changes={
+        name:props.company.name,
+        employers:props.company.employers,
+        sector:props.company.sector,
+        updateDate:timestamp,
       }
       const docRef = doc(db,"companys",id)
-
-      if(!docRef.updateDate){
-        addDoc(docRef,date)
-      }else{
-          setDoc(docRef,props.company,date).then(() => {
+      const res = getDoc(docRef,updateDate)
+      if(!res){
+        addDoc(docRef,updateDate).then(()=>{
+          router.push('/')
+        })
+      }
+      else{
+          updateDoc(docRef,changes).then(() => {
           router.push('/')
         })
       }
 
     }
 
-    return{update,updateDate,employers,sector}
+    return{update,name,updateDate,employers,sector,dataDate}
     
   }
 

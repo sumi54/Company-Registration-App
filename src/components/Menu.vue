@@ -39,6 +39,6 @@
      background-color: #e0b3b3; 
 } */
     .menu {
-        background-color: #e2ecf5 !important;
+        background-color: #dae8f5 !important;
     }
 </style>

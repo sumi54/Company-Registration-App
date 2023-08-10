@@ -22,14 +22,14 @@
             <td>{{ company.sector }}</td>
             <td>{{ company.date }}</td>
             <td>{{ company.dataDate }}</td>
-            <td></td>
+            <td v-if="company.updateDate">{{ company.updateDate }}</td>
+            <td v-else>-</td>
             <td>
                 <UpdateButton :company="company" ></UpdateButton>
                 <button type="button" class="btn btn-danger" @click="deleteCompany(company.id)">Sil</button>
 
             </td>
         </tr>
-        
     </tbody>
  </table>
  
@@ -49,7 +49,6 @@ export default{
         UpdateButton
     },
     setup(){
-
         const router=useRouter()
         const companyId=ref(null)
         const {companys,companysData}=getCompanys(companyId)
@@ -60,7 +59,7 @@ export default{
                 router.push('/')
             })
        }
-       
+
         return{companys,deleteCompany,companyId,companyId}
     }
 }
@@ -70,7 +69,7 @@ export default{
     margin: 9em 10em ;
 }
 .thead-active{
-    background-color: #e2ecf5;
+    background-color: #dae8f5;
 }
 .addButton{
     width: 9%;
