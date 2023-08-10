@@ -59,7 +59,8 @@ export default{
                 employers:employers.value,
                 sector:sector.value,
                 date:date.value,
-                dataDate:timestamp
+                dataDate:timestamp,
+                updateDate:timestamp
             }
             const res=collection(db,"companys")
             await addDoc(res,companyValue).then(()=>{

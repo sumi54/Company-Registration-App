@@ -49,6 +49,7 @@ export default{
         UpdateButton
     },
     setup(){
+        const deneme=ref('')
         const router=useRouter()
         const companyId=ref(null)
         const {companys,companysData}=getCompanys(companyId)
@@ -58,7 +59,7 @@ export default{
             await deleteDoc(docRef).then(()=>{
                 router.push('/')
             })
-       }
+        }
 
         return{companys,deleteCompany,companyId,companyId}
     }

@@ -11,11 +11,27 @@ const getCompany = () => {
                 orderBy("dataDate", "desc")
             ))
             
-            companys.value = res.docs.map(docs => {
-                const tarih=docs.data().dataDate.toDate();
-                const currentDate=moment(tarih).format('LL')
-                return {...docs.data(),id:docs.id,dataDate:currentDate}
+            companys.value = res.docs.map(doc => {
+                console.log(doc.data());
+
+                //Oluşturulma tarihi düzenleme
+
+                const createdTimestamp=doc.data().dataDate.toDate();
+                const created_at=moment(createdTimestamp).format('DD/MM/YYYY HH:mm');
+
+                //Güncellenme tarihi düzenleme
+                let updated_at = "";
+                if(doc.data().hasOwnProperty("updateDate")){
+                    const updatedTimestamp=doc.data().updateDate.toDate();
+                    updated_at=moment(updatedTimestamp).format('DD/MM/YYYY HH:mm')
+                }
+                
+            
+                return {...doc.data(),id:doc.id,dataDate:created_at,updateDate:updated_at}
+
             })
+
+          
 
 }
     return {companys,companysData}
